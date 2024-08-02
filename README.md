@@ -1,4 +1,3 @@
-
 # Kodack Backend
 
 Kodack is a comprehensive backend solution for the Kodack web application, designed to enhance coding practice by managing and sharing coding problem lists. This backend service leverages Node.js, Express, Prisma, and PostgreSQL to deliver a robust and scalable platform.
@@ -6,6 +5,7 @@ Kodack is a comprehensive backend solution for the Kodack web application, desig
 ## Project Overview
 
 Kodack provides users with the ability to:
+
 - Access and manage a master list of essential LeetCode problems.
 - Create and customize personal problem lists.
 - Track progress on problem-solving.
@@ -33,42 +33,41 @@ Kodack provides users with the ability to:
 
 1. **Clone the Repository**
 
-    ```bash
-    git clone https://github.com/yourusername/kodack-backend.git
-    cd kodack-backend
-    ```
+   ```bash
+   git clone https://github.com/yourusername/kodack-backend.git
+   cd kodack-backend
+   ```
 
 2. **Install Dependencies**
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 3. **Configure Environment Variables**
 
-    Create a `.env` file in the root directory with the following content:
+   Create a `.env` file in the root directory with the following content:
 
-    ```env
-    DATABASE_URL=postgresql://username:password@localhost:5432/kodack
-    JWT_SECRET=your_jwt_secret
-    ```
+   ```env
+   DATABASE_URL=postgresql://username:password@localhost:5432/kodack
+   JWT_SECRET=your_jwt_secret
+   ```
 
 4. **Run Database Migrations**
 
-    Apply database migrations using Prisma:
+   Apply database migrations using Prisma:
 
-    ```bash
-    npx prisma migrate deploy
-    ```
+   ```bash
+   npx prisma migrate deploy
+   ```
 
 5. **Start the Server**
 
-    Launch the server:
+   Launch the server:
 
-    ```bash
-    npm start
-    ```
-
+   ```bash
+   npm start
+   ```
 
 ## License
 
