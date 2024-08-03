@@ -23,16 +23,14 @@ const register = async (req, res) => {
     }
 
     // Hash the password
-    // const hashedPassword = await bcrypt.hash(password, 10);
-    const hashedPassword = hashPassword(password);
+    const hashedPassword = await hashPassword(password);
 
     // Create the new user
     await prisma.user.create({
       data: { name, username, email, passwordHash: hashedPassword },
     });
 
-    // Redirect to the login page or send a success message
-    res.redirect('/login');
+    res.status(200).send('user registered successfully.')
   } catch (error) {
     console.log(error);
     res.status(500).send('Error registering user');
