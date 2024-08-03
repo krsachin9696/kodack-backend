@@ -2,11 +2,10 @@ import express from 'express';
 import 'dotenv/config';
 import session from 'express-session';
 import passport from 'passport';
-import { PrismaClient } from '@prisma/client';
 import './config/passport.js';
+import { authRoute } from './routes/index.js';
 
 const app = express();
-const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3000;
 
 // Middleware setup
@@ -26,7 +25,8 @@ app.use(
 // Initialize passport and session handling
 app.use(passport.initialize());
 app.use(passport.session());
-[];
+
+app.use('/auth', authRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port:

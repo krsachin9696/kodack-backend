@@ -1,4 +1,4 @@
-import authRoute from "./authRoutes";
+import authRoute from "./authRoutes.js";
 
 export {
     authRoute,
