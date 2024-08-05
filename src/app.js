@@ -28,10 +28,13 @@ app.use(passport.session());
 
 app.use('/auth', authRoute);
 
-app.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.json({ message: 'This is a protected route.' });
-});
-
+app.get(
+  '/protected',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    res.json({ message: 'This is a protected route.' });
+  },
+);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);

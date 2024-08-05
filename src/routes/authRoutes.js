@@ -1,5 +1,11 @@
 import { Router } from 'express';
-import { signup, login, logout, verifyOtp, setupPassword } from '../controllers/auth/index.js';
+import {
+  signup,
+  login,
+  logout,
+  verifyOtp,
+  setupPassword,
+} from '../controllers/auth/index.js';
 
 const authRoute = Router();
 
