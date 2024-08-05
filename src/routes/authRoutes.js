@@ -1,14 +1,9 @@
-import express from 'express';
-import passport from 'passport';
-import { register } from '../controllers/auth/index.js';
+import { Router } from 'express';
+import { signup, login } from '../controllers/auth/register.js';
 
-const authRoute = express.Router();
+const authRoute = Router();
 
-authRoute.post('/register', register);
-authRoute.post('/login', passport.authenticate('local', {
-  successRedirect: '/dashboard',
-  failureRedirect: '/login',
-  failureFlash: true
-}));
+authRoute.post('/signup', signup);
+authRoute.post('/login', login);
 
 export default authRoute;
