@@ -1,5 +1,6 @@
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
+    console.log("hn ye chla to hai")
     return next();
   }
   res.redirect('/login');
@@ -7,7 +8,7 @@ const isAuthenticated = (req, res, next) => {
 
 export default isAuthenticated;
 
-
+ac
 
 // src/middleware/authenticateJwt.js
 // import passport from 'passport';

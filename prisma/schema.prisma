@@ -19,6 +19,10 @@ model User {
   username     String   @db.VarChar(50)
   email        String   @db.VarChar(100) @unique
   passwordHash String   @db.VarChar(255)
+  tokens       Json?    @db.Json
+  otp          String?  @db.VarChar(6)
+  otpExpiresAt DateTime? @db.Timestamp(6)
+  otpVerified  Boolean  @default(false)
   createdAt    DateTime @default(now()) @db.Timestamp(6)
   updatedAt    DateTime @updatedAt @db.Timestamp(6)
 }
