@@ -1,45 +1,36 @@
 import passport from 'passport';
-import { Strategy as LocalStrategy } from 'passport-local';
-import bcrypt from 'bcryptjs';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { PrismaClient } from '@prisma/client';
+import 'dotenv/config';
 
+const jwtSecret = process.env.JWT_SECRET;
 const prisma = new PrismaClient();
 
-passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    try {
-      // Find user by username
-      const user = await prisma.user.findUnique({
-        where: { username },
-      });
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-
-      // Compare password
-      const isMatch = await bcrypt.compare(password, user.passwordHash);
-      if (!isMatch) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-
+passport.use(new JwtStrategy({
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: jwtSecret,
+}, async (jwt_payload, done) => {
+  try {
+    const user = await prisma.user.findUnique({ where: { id: jwt_payload.id } });
+    if (user) {
       return done(null, user);
-    } catch (err) {
-      return done(err);
+    } else {
+      return done(null, false);
     }
-  }),
-);
+  } catch (err) {
+    return done(err, false);
+  }
+}));
 
 passport.serializeUser((user, done) => {
-  done(null, user.userID);
+  done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await prisma.user.findUnique({
-      where: { userID: id },
-    });
+    const user = await prisma.user.findUnique({ where: { id } });
     done(null, user);
   } catch (err) {
-    done(err);
+    done(err, null);
   }
 });
