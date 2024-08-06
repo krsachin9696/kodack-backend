@@ -1,4 +1,4 @@
-import { addQuestionToListService } from '../../services/questionServices.js';
+import { addQuestionToListService, getQuestionsInListService } from '../../services/questionServices.js';
 
 const addQuestion = async (req, res) => {
   try {
@@ -25,4 +25,21 @@ const addQuestion = async (req, res) => {
   }
 };
 
-export { addQuestion };
+const getQuestionsInList = async (req, res) => {
+    try {
+      const { listID } = req.params;
+  
+      if (!listID) {
+        return res.status(400).json({ error: 'Missing list ID' });
+      }
+  
+      const questions = await getQuestionsInListService(listID);
+  
+      res.status(200).json({ questions });
+    } catch (error) {
+      console.error('Error fetching questions from list:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+
+export { addQuestion, getQuestionsInList };

@@ -1,4 +1,5 @@
 import prisma from '../config/prismaClient.js';
+import { findListWithDetails } from '../repositories/list/index.js';
 
 export const createList = async (data) => {
   return await prisma.list.create({
@@ -38,3 +39,8 @@ export const getListsByUserId = async (userId) => {
     where: { userID: userId, isDeleted: false },
   });
 };
+
+
+export const getListDetails = async (listID) => {
+    return findListWithDetails(listID);
+  };

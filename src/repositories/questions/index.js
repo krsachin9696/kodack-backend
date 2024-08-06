@@ -23,4 +23,13 @@ const addQuestionToList = async (listID, questionID) => {
   });
 };
 
-export { findQuestionByLink, createQuestion, addQuestionToList };
+const findQuestionsInList = async (listID) => {
+  return prisma.listQuestion.findMany({
+    where: { listID, isDeleted: false },
+    include: {
+      question: true,
+    },
+  });
+};
+
+export { findQuestionByLink, createQuestion, addQuestionToList, findQuestionsInList };

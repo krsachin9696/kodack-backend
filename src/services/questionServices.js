@@ -21,4 +21,8 @@ const addQuestionToListService = async (payload) => {
   return question;
 };
 
-export { addQuestionToListService };
+const getQuestionsInListService = async (listID) => {
+    return findQuestionsInList(listID);
+  };
+
+export { addQuestionToListService, getQuestionsInListService };
