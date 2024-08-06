@@ -7,6 +7,7 @@ import sendEmail from '../../utils/sendEmail.js';
 
 const prisma = new PrismaClient();
 const jwtSecret = process.env.JWT_SECRET;
+console.log("hello");
 
 export const signup = async (req, res) => {
   const { name, username, email } = req.body;
