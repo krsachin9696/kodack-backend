@@ -1,6 +1,6 @@
-import { addQuestionToListService } from "../../services/questionServices.js";
+import { addQuestionToListService } from '../../services/questionServices.js';
 
-const addQuestionToListController = async (req, res) => {
+const addQuestion = async (req, res) => {
   try {
     const { title, link, listID, createdById, updatedById } = req.body;
 
@@ -10,12 +10,12 @@ const addQuestionToListController = async (req, res) => {
     }
 
     // Add question to list
-    const question = await addQuestionToListService({ 
-        title, 
-        link, 
-        listID, 
-        createdById, 
-        updatedById 
+    const question = await addQuestionToListService({
+      title,
+      link,
+      listID,
+      createdById,
+      updatedById,
     });
 
     res.status(200).json({ message: 'Question added to list', question });
@@ -25,4 +25,4 @@ const addQuestionToListController = async (req, res) => {
   }
 };
 
-export { addQuestionToListController };
+export { addQuestion };

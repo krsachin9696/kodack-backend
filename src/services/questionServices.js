@@ -1,7 +1,7 @@
-import { 
-    findQuestionByLink, 
-    createQuestion, 
-    addQuestionToList 
+import {
+  findQuestionByLink,
+  createQuestion,
+  addQuestionToList,
 } from '../repositories/questions/index.js';
 
 const addQuestionToListService = async (payload) => {

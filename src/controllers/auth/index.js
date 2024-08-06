@@ -47,12 +47,10 @@ export const signup = async (req, res) => {
       `Your OTP code is ${otp}. It is valid for 15 minutes.`,
     );
 
-    res
-      .status(201)
-      .json({
-        message:
-          'Signup successful. Please verify your email with the OTP sent to you.',
-      });
+    res.status(201).json({
+      message:
+        'Signup successful. Please verify your email with the OTP sent to you.',
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'User registration failed' });
@@ -95,8 +93,10 @@ export const verifyOtp = async (req, res) => {
 export const setupPassword = async (req, res) => {
   const { email, password, confirmPassword } = req.body;
   try {
-    if(password != confirmPassword) {
-      return res.status(404).json({ error: 'password & confirm password does not match.'})
+    if (password != confirmPassword) {
+      return res
+        .status(404)
+        .json({ error: 'password & confirm password does not match.' });
     }
 
     const user = await prisma.user.findUnique({
@@ -138,7 +138,9 @@ export const login = async (req, res) => {
     const isPasswordCorrect = await bcrypt.compare(password, user.passwordHash);
 
     if (isPasswordCorrect) {
-      const token = jwt.sign({ id: user.userID }, jwtSecret, { expiresIn: '1h' });
+      const token = jwt.sign({ id: user.userID }, jwtSecret, {
+        expiresIn: '1h',
+      });
 
       // If tokens field is null, initialize it as an empty array
       const currentTokens = user.tokens || [];
@@ -162,12 +164,13 @@ export const login = async (req, res) => {
   }
 };
 
-
 export const logout = async (req, res) => {
   const { userID, email, token } = req.body;
 
   if (!userID || !email || !token) {
-    return res.status(400).json({ error: 'User ID, email, and token are required' });
+    return res
+      .status(400)
+      .json({ error: 'User ID, email, and token are required' });
   }
 
   try {
@@ -180,7 +183,7 @@ export const logout = async (req, res) => {
     }
 
     // Remove the token from the list
-    const updatedTokens = (user.tokens || []).filter(t => t !== token);
+    const updatedTokens = (user.tokens || []).filter((t) => t !== token);
 
     // Update the user with the remaining tokens
     await prisma.user.update({

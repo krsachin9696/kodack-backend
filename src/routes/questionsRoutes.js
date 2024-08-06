@@ -1,8 +1,8 @@
 import express from 'express';
-import { addQuestionToListController } from '../controllers/questionController.js';
+import { addQuestion } from '../controllers/questions/index.js';
 
 const questionsRoute = express.Router();
 
-questionsRoute.post('/add-question', addQuestionToListController);
+questionsRoute.post('/add-question', addQuestion);
 
 export default questionsRoute;

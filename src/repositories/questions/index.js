@@ -1,4 +1,4 @@
-import prisma from "../../config/prismaClient.js";
+import prisma from '../../config/prismaClient.js';
 
 const findQuestionByLink = async (link) => {
   return prisma.question.findUnique({
@@ -23,8 +23,4 @@ const addQuestionToList = async (listID, questionID) => {
   });
 };
 
-export {
-  findQuestionByLink,
-  createQuestion,
-  addQuestionToList,
-};
+export { findQuestionByLink, createQuestion, addQuestionToList };
