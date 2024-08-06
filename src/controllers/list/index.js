@@ -46,10 +46,20 @@ export const updateList = async (req, res) => {
 
 export const deleteList = async (req, res) => {
   try {
-    await listService.deleteList(req.params.id);
+    await listService.softDeleteList(req.params.id);
     res.status(204).send();
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Failed to delete list' });
+  }
+};
+
+export const getListsByUserId = async (req, res) => {
+  try {
+    const lists = await listService.getListsByUserId(req.params.userId);
+    res.status(200).json(lists);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Failed to retrieve lists' });
   }
 };

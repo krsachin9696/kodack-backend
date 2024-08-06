@@ -30,7 +30,7 @@ model List {
   name        String    @db.VarChar(150)
   visibility  Int  
   tags        Json?     @db.Json
-  isDeleted   Boolean   @db.Boolean
+  isDeleted   Boolean   @default(false)
   createdAt   DateTime  @default(now()) @db.Timestamp(6)
   updatedAt   DateTime  @updatedAt @db.Timestamp(6)
 

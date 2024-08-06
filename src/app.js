@@ -3,7 +3,7 @@ import 'dotenv/config';
 import session from 'express-session';
 import passport from 'passport';
 import './config/passport.js';
-import authRoute from './routes/authRoutes.js';
+import { authRoute, listRoute } from './routes/index.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,6 +27,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth', authRoute);
+app.use('/list', listRoute);
 
 app.get(
   '/protected',
