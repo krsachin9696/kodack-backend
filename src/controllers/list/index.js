@@ -5,7 +5,6 @@ export const createList = async (req, res) => {
     const newList = await listService.createList(req.body);
     res.status(201).json(newList);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: 'Failed to create list' });
   }
 };
@@ -15,7 +14,6 @@ export const getAllLists = async (req, res) => {
     const lists = await listService.getAllLists();
     res.status(200).json(lists);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: 'Failed to retrieve lists' });
   }
 };
@@ -29,7 +27,6 @@ export const getListById = async (req, res) => {
       res.status(404).json({ error: 'List not found' });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: 'Failed to retrieve list' });
   }
 };
@@ -39,7 +36,6 @@ export const updateList = async (req, res) => {
     const updatedList = await listService.updateList(req.params.id, req.body);
     res.status(200).json(updatedList);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: 'Failed to update list' });
   }
 };
@@ -49,17 +45,15 @@ export const deleteList = async (req, res) => {
     await listService.softDeleteList(req.params.id);
     res.status(204).send();
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: 'Failed to delete list' });
   }
 };
 
 export const getListsByUserId = async (req, res) => {
   try {
-    const lists = await listService.getListsByUserId(req.params.userId);
+    const lists = await listService.getListsByUserId(req.params.userID);
     res.status(200).json(lists);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: 'Failed to retrieve lists' });
   }
 };
@@ -67,20 +61,17 @@ export const getListsByUserId = async (req, res) => {
 export const getListDetails = async (req, res) => {
   try {
     const { listID } = req.params;
+    const { userID } = req.query;
 
-    if (!listID) {
-      return res.status(400).json({ error: 'Missing list ID' });
+    if (!userID) {
+      return res
+        .status(400)
+        .json({ error: 'userID query parameter is required' });
     }
 
-    const listDetails = await listService.getListDetails(listID);
-
-    if (!listDetails) {
-      return res.status(404).json({ error: 'List not found' });
-    }
-
+    const listDetails = await listService.getListDetails(listID, userID);
     res.status(200).json(listDetails);
   } catch (error) {
-    console.error('Error fetching list details:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Failed to retrieve list details' });
   }
 };
