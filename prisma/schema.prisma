@@ -41,7 +41,6 @@ model List {
   listID     String   @id @default(uuid()) @db.Uuid
   name       String   @db.VarChar(150)
   visibility Int
-  tags       Json?    @db.Json
   isDeleted  Boolean  @default(false)
   createdAt  DateTime @default(now()) @db.Timestamp(6)
   updatedAt  DateTime @updatedAt @db.Timestamp(6)
@@ -61,6 +60,9 @@ model List {
 
   // One-to-many relation with UserQuestionStatus model
   UserQuestionStatus UserQuestionStatus[]
+
+  // Many-to-many relation with Tag model
+  tags ListTag[]
 }
 
 model Question {
@@ -121,4 +123,27 @@ model UserQuestionStatus {
 
   // Composite unique constraint
   @@unique([userID, listID, questionID])
+}
+
+model Tag {
+  id        String    @id @default(uuid()) @db.Uuid
+  name      String    @db.VarChar(50)
+  createdAt DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt DateTime  @updatedAt @db.Timestamp(6)
+
+  // Many-to-many relation with List model
+  lists ListTag[]
+}
+
+model ListTag {
+  id       String @id @default(uuid()) @db.Uuid
+  listID   String @db.Uuid
+  tagID    String @db.Uuid
+
+  // Relations
+  list List @relation(fields: [listID], references: [listID])
+  tag  Tag  @relation(fields: [tagID], references: [id])
+
+  // Composite unique constraint
+  @@unique([listID, tagID])
 }
