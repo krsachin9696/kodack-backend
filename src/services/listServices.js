@@ -20,6 +20,6 @@ export const getListsByUserId = async (userId) => {
   return await listRepository.getListsByUserId(userId);
 };
 
-export const getListDetails = async (listID, userID) => {
-  return await listRepository.getListDetailsService(listID, userID);
+export const getListDetails = async (listID, userID, { page, limit }) => {
+  return await listRepository.getListDetailsRepository(listID, userID, { page, limit });
 };

@@ -2,6 +2,7 @@ import {
   findQuestionByLink,
   createQuestion,
   addQuestionToList,
+  findQuestionsInList,
 } from '../repositories/questions/index.js';
 
 const addQuestionToListService = async (payload) => {

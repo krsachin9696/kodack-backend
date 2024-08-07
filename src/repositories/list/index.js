@@ -37,8 +37,9 @@ export const getListsByUserId = async (userId) => {
   });
 };
 
+export const getListDetailsRepository = async (listID, userID, { page, limit }) => {
+  const skip = (page - 1) * limit;
 
-export const getListDetailsService = async (listID, userID) => {
   const listDetails = await prisma.list.findUnique({
     where: { listID },
     include: {
@@ -61,6 +62,9 @@ export const getListDetailsService = async (listID, userID) => {
         },
       },
       questions: {
+        skip,
+        take: limit,
+        where: { isDeleted: false },
         include: {
           question: true,
           userQuestionStatuses: {
@@ -73,5 +77,21 @@ export const getListDetailsService = async (listID, userID) => {
       },
     },
   });
-  return listDetails;
+
+  const totalQuestionsCount = await prisma.listQuestion.count({
+    where: {
+      listID,
+      isDeleted: false,
+    },
+  });
+
+  return {
+    listDetails,
+    pagination: {
+      currentPage: page,
+      pageSize: limit,
+      totalItems: totalQuestionsCount,
+      totalPages: Math.ceil(totalQuestionsCount / limit),
+    },
+  };
 };
