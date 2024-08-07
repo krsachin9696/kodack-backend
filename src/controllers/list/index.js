@@ -65,22 +65,22 @@ export const getListsByUserId = async (req, res) => {
 };
 
 export const getListDetails = async (req, res) => {
-    try {
-      const { listID } = req.params;
-  
-      if (!listID) {
-        return res.status(400).json({ error: 'Missing list ID' });
-      }
-  
-      const listDetails = await listService.getListDetails(listID);
-  
-      if (!listDetails) {
-        return res.status(404).json({ error: 'List not found' });
-      }
-  
-      res.status(200).json(listDetails);
-    } catch (error) {
-      console.error('Error fetching list details:', error);
-      res.status(500).json({ error: 'Internal server error' });
+  try {
+    const { listID } = req.params;
+
+    if (!listID) {
+      return res.status(400).json({ error: 'Missing list ID' });
     }
-  };
+
+    const listDetails = await listService.getListDetails(listID);
+
+    if (!listDetails) {
+      return res.status(404).json({ error: 'List not found' });
+    }
+
+    res.status(200).json(listDetails);
+  } catch (error) {
+    console.error('Error fetching list details:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

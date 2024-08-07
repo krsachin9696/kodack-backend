@@ -22,7 +22,7 @@ const addQuestionToListService = async (payload) => {
 };
 
 const getQuestionsInListService = async (listID) => {
-    return findQuestionsInList(listID);
-  };
+  return findQuestionsInList(listID);
+};
 
 export { addQuestionToListService, getQuestionsInListService };

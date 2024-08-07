@@ -32,4 +32,9 @@ const findQuestionsInList = async (listID) => {
   });
 };
 
-export { findQuestionByLink, createQuestion, addQuestionToList, findQuestionsInList };
+export {
+  findQuestionByLink,
+  createQuestion,
+  addQuestionToList,
+  findQuestionsInList,
+};

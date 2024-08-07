@@ -40,7 +40,6 @@ export const getListsByUserId = async (userId) => {
   });
 };
 
-
 export const getListDetails = async (listID) => {
-    return findListWithDetails(listID);
-  };
+  return findListWithDetails(listID);
+};
