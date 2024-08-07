@@ -18,19 +18,6 @@ export const getAllLists = async (req, res) => {
   }
 };
 
-export const getListById = async (req, res) => {
-  try {
-    const list = await listService.getListById(req.params.id);
-    if (list) {
-      res.status(200).json(list);
-    } else {
-      res.status(404).json({ error: 'List not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve list' });
-  }
-};
-
 export const updateList = async (req, res) => {
   try {
     const updatedList = await listService.updateList(req.params.id, req.body);
@@ -61,7 +48,7 @@ export const getListsByUserId = async (req, res) => {
 export const getListDetails = async (req, res) => {
   try {
     const { listID } = req.params;
-    const { userID } = req.query;
+    const { userID } = req.header;
 
     if (!userID) {
       return res

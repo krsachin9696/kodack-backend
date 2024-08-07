@@ -8,12 +8,6 @@ export const getAllLists = async () => {
   return await prisma.list.findMany({ where: { isDeleted: false } });
 };
 
-export const getListById = async (id) => {
-  return await prisma.list.findUnique({
-    where: { listID: id, isDeleted: false },
-  });
-};
-
 export const updateList = async (id, data) => {
   return await prisma.list.update({
     where: {
@@ -32,9 +26,17 @@ export const softDeleteList = async (id) => {
 
 export const getListsByUserId = async (userId) => {
   return await prisma.list.findMany({
-    where: { userID: userId, isDeleted: false },
+    where: { 
+      userID: userId, 
+      isDeleted: false 
+    },
+    select: {
+      listID: true,
+      name: true,
+    },
   });
 };
+
 
 export const getListDetailsService = async (listID, userID) => {
   const listDetails = await prisma.list.findUnique({

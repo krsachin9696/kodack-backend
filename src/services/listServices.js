@@ -8,10 +8,6 @@ export const getAllLists = async () => {
   return await listRepository.getAllLists();
 };
 
-export const getListById = async (id) => {
-  return await listRepository.getListById(id);
-};
-
 export const updateList = async (id, data) => {
   return await listRepository.updateList(id, data);
 };
