@@ -134,12 +134,32 @@ export const login = (req, res, next) => {
 };
 
 
+// export const logout = (req, res) => {
+//   req.logout((err) => {
+//     if (err) {
+//       return res.status(500).json({ error: 'Logout failed' });
+//     }
+//     // res.clearCookie('connect.sid');
+//     res.clearCookie('connect.sid', { path: '/' });
+//     res.status(200).json({ message: 'Logout successful' });
+//   });
+// };
+
+
+
 export const logout = (req, res) => {
   req.logout((err) => {
     if (err) {
-      return res.status(500).json({ error: 'Logout failed' });
+      return res.status(500).json({ error: 'Logout failed.' });
     }
-    res.status(200).json({ message: 'Logout successful' });
+    // Explicitly clear the session cookie
+    res.clearCookie('connect.sid', { path: '/' });
+    // Optionally: Destroy the session explicitly
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ error: 'Logout failed.' });
+      }
+      res.status(200).json({ message: 'Logout successful' });
+    });
   });
 };
-
