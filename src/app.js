@@ -5,6 +5,7 @@ import session from 'express-session';
 import passport from 'passport';
 import './config/passport.js';
 import { authRoute, listRoute, questionsRoute } from './routes/index.js';
+import isAuthenticated from './middlewares/authMiddleware.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -40,9 +41,16 @@ app.use('/auth', authRoute);
 app.use('/list', listRoute);
 app.use('/question', questionsRoute);
 
+// app.get(
+//   '/protected',
+//   passport.authenticate('jwt', { session: false }),
+//   (req, res) => {
+//     res.json({ message: 'This is a protected route.' });
+//   },
+// );
 app.get(
   '/protected',
-  passport.authenticate('jwt', { session: false }),
+  isAuthenticated,
   (req, res) => {
     res.json({ message: 'This is a protected route.' });
   },
