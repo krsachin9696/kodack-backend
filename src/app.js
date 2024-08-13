@@ -5,6 +5,7 @@ import session from 'express-session';
 import passport from 'passport';
 import './config/passport.js';
 import { authRoute, listRoute, questionsRoute } from './routes/index.js';
+import isAuthenticated from './middlewares/authMiddleware.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -28,7 +29,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true },
+    // cookie: { secure: true }, // making this true ensures setting cookies in HTTPS only.
   }),
 );
 
@@ -42,7 +43,7 @@ app.use('/question', questionsRoute);
 
 app.get(
   '/protected',
-  passport.authenticate('jwt', { session: false }),
+  isAuthenticated,
   (req, res) => {
     res.json({ message: 'This is a protected route.' });
   },

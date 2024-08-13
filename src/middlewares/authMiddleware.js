@@ -1,16 +1,8 @@
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
-    console.log('hn ye chla to hai');
     return next();
   }
-  res.redirect('/login');
+  res.status(401).json({ error: 'Unauthorized' });
 };
 
 export default isAuthenticated;
-
-ac;
-
-// src/middleware/authenticateJwt.js
-// import passport from 'passport';
-
-// export default passport.authenticate('jwt', { session: false });

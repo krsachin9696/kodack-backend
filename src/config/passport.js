@@ -1,44 +1,49 @@
 import passport from 'passport';
-import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import { PrismaClient } from '@prisma/client';
-import 'dotenv/config';
-
-const jwtSecret = process.env.JWT_SECRET;
-const prisma = new PrismaClient();
+import { Strategy as LocalStrategy } from 'passport-local';
+import bcrypt from 'bcryptjs';
+import prisma from './prismaClient.js';
 
 passport.use(
-  new JwtStrategy(
+  new LocalStrategy(
     {
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: jwtSecret,
+      usernameField: 'email',
+      passwordField: 'password',
     },
-    async (jwt_payload, done) => {
+    async (email, password, done) => {
       try {
-        const user = await prisma.user.findUnique({
-          where: { userID: jwt_payload.id },
-        });
-        if (user) {
-          return done(null, user);
-        } else {
-          return done(null, false);
+        const user = await prisma.user.findUnique({ where: { email } });
+
+        if (!user) {
+          return done(null, false, { message: 'Incorrect email.' });
         }
-      } catch (err) {
-        console.log(err);
-        return done(err, false);
+
+        const isPasswordCorrect = await bcrypt.compare(password, user.passwordHash);
+
+        if (!isPasswordCorrect) {
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+
+        return done(null, user);
+      } catch (error) {
+        return done(error);
       }
     },
   ),
 );
 
+// Serialize user to store in session
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user.userID);
 });
 
-passport.deserializeUser(async (id, done) => {
+// Deserialize user from session
+passport.deserializeUser(async (userID, done) => {
   try {
-    const user = await prisma.user.findUnique({ where: { id } });
+    const user = await prisma.user.findUnique({ where: { userID } });
     done(null, user);
   } catch (err) {
     done(err, null);
   }
 });
+
+export default passport;
