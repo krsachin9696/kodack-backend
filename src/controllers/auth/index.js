@@ -1,5 +1,4 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import passport from 'passport';
 import 'dotenv/config';
@@ -132,20 +131,6 @@ export const login = (req, res, next) => {
     });
   })(req, res, next);
 };
-
-
-// export const logout = (req, res) => {
-//   req.logout((err) => {
-//     if (err) {
-//       return res.status(500).json({ error: 'Logout failed' });
-//     }
-//     // res.clearCookie('connect.sid');
-//     res.clearCookie('connect.sid', { path: '/' });
-//     res.status(200).json({ message: 'Logout successful' });
-//   });
-// };
-
-
 
 export const logout = (req, res) => {
   req.logout((err) => {
