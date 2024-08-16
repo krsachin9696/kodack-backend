@@ -3,6 +3,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import bcrypt from 'bcryptjs';
 import prisma from './prismaClient.js';
+import 'dotenv/config';
 
 passport.use(
   new LocalStrategy(
