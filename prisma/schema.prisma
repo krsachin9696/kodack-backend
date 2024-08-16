@@ -17,6 +17,7 @@ model User {
   otp          String?   @db.VarChar(6)
   otpExpiresAt DateTime? @db.Timestamp(6)
   otpVerified  Boolean   @default(false)
+  googleId     String?   @unique @db.VarChar(255)
   createdAt    DateTime  @default(now()) @db.Timestamp(6)
   updatedAt    DateTime  @updatedAt @db.Timestamp(6)
 
