@@ -18,15 +18,14 @@ export const addTagsToList = async (listID, tags) => {
 };
 
 export const updateTagsForList = async (listID, addTags, removeTags) => {
-    if (removeTags && removeTags.length > 0) {
-      await tagRepository.removeTagsFromList(listID, removeTags);
-    }
-  
-    if (addTags && addTags.length > 0) {
-      const result = await tagRepository.addTagsToList(listID, addTags);
-      return result;
-    }
-  
-    return { message: 'Tags updated successfully' };
-  };
-  
+  if (removeTags && removeTags.length > 0) {
+    await tagRepository.removeTagsFromList(listID, removeTags);
+  }
+
+  if (addTags && addTags.length > 0) {
+    const result = await tagRepository.addTagsToList(listID, addTags);
+    return result;
+  }
+
+  return { message: 'Tags updated successfully' };
+};

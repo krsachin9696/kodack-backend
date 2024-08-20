@@ -19,7 +19,10 @@ passport.use(
           return done(null, false, { message: 'Incorrect email.' });
         }
 
-        const isPasswordCorrect = await bcrypt.compare(password, user.passwordHash);
+        const isPasswordCorrect = await bcrypt.compare(
+          password,
+          user.passwordHash,
+        );
 
         if (!isPasswordCorrect) {
           return done(null, false, { message: 'Incorrect password.' });
@@ -68,7 +71,6 @@ passport.use(
     },
   ),
 );
-
 
 // Serialize user to store in session
 passport.serializeUser((user, done) => {

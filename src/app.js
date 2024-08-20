@@ -41,13 +41,9 @@ app.use('/auth', authRoute);
 app.use('/list', listRoute);
 app.use('/question', questionsRoute);
 
-app.get(
-  '/protected',
-  isAuthenticated,
-  (req, res) => {
-    res.json({ message: 'This is a protected route.' });
-  },
-);
+app.get('/protected', isAuthenticated, (req, res) => {
+  res.json({ message: 'This is a protected route.' });
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);

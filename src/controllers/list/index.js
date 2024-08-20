@@ -50,7 +50,7 @@ export const getListDetails = async (req, res) => {
     const { listID } = req.params;
     const { userID } = req.header;
 
-    const page = parseInt(req.query.page, 10) || 1; 
+    const page = parseInt(req.query.page, 10) || 1;
     const limit = parseInt(req.query.limit, 10) || 10;
 
     if (!userID) {
@@ -59,7 +59,11 @@ export const getListDetails = async (req, res) => {
         .json({ error: 'userID query parameter is required' });
     }
 
-    const { listDetails, pagination } = await listService.getListDetails(listID, userID, { page, limit });
+    const { listDetails, pagination } = await listService.getListDetails(
+      listID,
+      userID,
+      { page, limit },
+    );
     res.status(200).json({ listDetails, pagination });
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve list details' });

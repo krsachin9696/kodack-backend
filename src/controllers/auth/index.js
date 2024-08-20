@@ -37,13 +37,17 @@ export const signup = async (req, res) => {
       `Your OTP code is ${otp}. It is valid for 15 minutes.`,
     );
 
-    res.status(201).json({ message: 'Signup successful. Please verify your email with the OTP sent to you.' });
+    res
+      .status(201)
+      .json({
+        message:
+          'Signup successful. Please verify your email with the OTP sent to you.',
+      });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'User registration failed' });
   }
 };
-
 
 export const verifyOtp = async (req, res) => {
   const { email, otp } = req.body;
@@ -113,7 +117,6 @@ export const setupPassword = async (req, res) => {
     res.status(500).json({ error: 'Password setup failed' });
   }
 };
-
 
 export const login = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {

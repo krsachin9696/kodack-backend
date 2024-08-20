@@ -23,7 +23,11 @@ export const addTagsToList = async (req, res) => {
 export const updateTagsForList = async (req, res) => {
   try {
     const { listID, addTags, removeTags } = req.body;
-    const result = await tagService.updateTagsForList(listID, addTags, removeTags);
+    const result = await tagService.updateTagsForList(
+      listID,
+      addTags,
+      removeTags,
+    );
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ error: 'Failed to update tags for list' });

@@ -26,9 +26,9 @@ export const softDeleteList = async (id) => {
 
 export const getListsByUserId = async (userId) => {
   return await prisma.list.findMany({
-    where: { 
-      userID: userId, 
-      isDeleted: false 
+    where: {
+      userID: userId,
+      isDeleted: false,
     },
     select: {
       listID: true,
@@ -37,7 +37,11 @@ export const getListsByUserId = async (userId) => {
   });
 };
 
-export const getListDetailsRepository = async (listID, userID, { page, limit }) => {
+export const getListDetailsRepository = async (
+  listID,
+  userID,
+  { page, limit },
+) => {
   const skip = (page - 1) * limit;
 
   const listDetails = await prisma.list.findUnique({

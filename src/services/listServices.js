@@ -21,5 +21,8 @@ export const getListsByUserId = async (userId) => {
 };
 
 export const getListDetails = async (listID, userID, { page, limit }) => {
-  return await listRepository.getListDetailsRepository(listID, userID, { page, limit });
+  return await listRepository.getListDetailsRepository(listID, userID, {
+    page,
+    limit,
+  });
 };
